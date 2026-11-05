@@ -1,7 +1,7 @@
 # BÁO CÁO BÀI THỰC HÀNH CÁ NHÂN / NHÓM - BTN_01
 
-- **Họ và tên:** [Nguyễn Văn A]
-- **Mã sinh viên:** [64xxxxxx]
+- **Họ và tên:** [Bun Hin Tham Ma Vi Chai]
+- **Mã sinh viên:** [2023AN050]
 - **Tên nhóm:** Nhóm 3 (Đề tài A9 - Quản lý bán hàng mini có giỏ hàng)
 - **Tài khoản GitHub:** Gr1z2ly
 - **Trạng thái cài đặt GitHub Desktop:** Đã cài đặt và hoàn tất cấu hình.

@@ -18,8 +18,6 @@
 
 ## 2. KẾT QUẢ THẢO LUẬN NHIỆM VỤ 1 (VÍ DỤ A–D)
 
-## 2. KẾT QUẢ THẢO LUẬN NHIỆM VỤ 1 (VÍ DỤ A–D)
-
 * **Ví dụ A (if/else):**
   * Giờ < 12 $\rightarrow$ In ra: **"Chao buoi sang!"**
   * Giờ từ 12 đến < 18 $\rightarrow$ In ra: **"Chao buoi chieu!"**

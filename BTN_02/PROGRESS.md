@@ -3,36 +3,38 @@
 
 - **Tên nhóm:** Nhóm 3 (Đề tài A9 - Quản lý bán hàng mini)
 - **Đường dẫn GitHub Repository:** https://github.com/Gr1z2ly/ICT0025_K64CNTT_Nhom03.git
-- **Thư mục bài tập:** `/opt/lampp/htdocs/ICT0025_K64CNTT_Nhom03/BTN_01/`
+- **Thư mục bài tập:** `/opt/lampp/htdocs/ICT0025_K64CNTT_Nhom03/BTN_01/` (hoặc `BTN_02`)
 
 ---
 
 ## 1. THÀNH VIÊN VÀ PHÂN CÔNG ĐÓNG GÓP
 
-| STT | Họ và tên | Vai trò | Phân công đóng góp |
-|---|---|---|---|
-| 1 | Bun Hin Thăm Ma Vị Chai | Coordinator (Trưởng nhóm) | Quản lý dự án Git, tổng hợp mã nguồn & tích hợp Nhiệm vụ 4 |
-| 2 | Hà Minh Khánh | Driver | Thực hiện mã Nhiệm vụ 2 (`nv2_if.php`) & testcase |
-| 3 | Bạc Thị Phương Hằng | Navigator | Thực hiện mã Nhiệm vụ 2 (`nv2_switch.php`) & viết báo cáo `PROGRESS.md` |
-| 4 | Phó Tho Thăn Sạ May | Tester | Thực hiện mã Nhiệm vụ 3 (`nv3_for.php`, `nv3_while.php`), kiểm thử hệ thống |
+| STT | Họ và tên | Mã sinh viên | Vai trò | Phân công đóng góp |
+|---|---|---|---|---|
+| 1 | [Họ tên Thành viên 1] | [MSV 1] | Coordinator | Quản lý dự án Git, tổng hợp mã nguồn & tích hợp Nhiệm vụ 4 |
+| 2 | [Họ tên Thành viên 2] | [MSV 2] | Driver | Thực hiện tệp `nv2_if.php` (Nhiệm vụ 2 - Cặp 1) |
+| 3 | [Họ tên Thành viên 3] | [MSV 3] | Navigator | Thực hiện tệp `nv2_switch.php` (Nhiệm vụ 2 - Cặp 2) & viết báo cáo |
+| 4 | [Họ tên Thành viên 4] | [MSV 4] | Tester | Thực hiện tệp `nv3_for.php` & `nv3_while.php` (Nhiệm vụ 3), kiểm thử hệ thống |
 
 ---
 
-## 2. KẾT QUẢ THẢO LUẬN NHIỆM VỤ 1 (VÍ DỤ A–D)
+## 2. NHIỆM VỤ 1: ÔN NỘI DUNG TỰ HỌC VÀ THẢO LUẬN (VÍ DỤ A–D)
 
-* **Ví dụ A (if/else):**
-  * Giờ < 12 $\rightarrow$ In ra: **"Chao buoi sang!"**
-  * Giờ từ 12 đến < 18 $\rightarrow$ In ra: **"Chao buoi chieu!"**
-  * Giờ $\ge$ 18 $\rightarrow$ In ra: **"Chao buoi toi!"**
-  * *Giải thích:* Chương trình lấy giờ hiện tại bằng `date("H")` và kiểm tra từ trên xuống dưới. Ví dụ nếu `$gio = 14`, điều kiện đầu tiên (`$gio < 12`) bị bỏ qua vì sai (false), chuyển sang điều kiện thứ hai (`$gio < 18`) trả về đúng (true) nên thực thi in ra "Chao buoi chieu!" và kết thúc khối lệnh, không chạy vào nhánh `else` nữa.
+### 1. Cấu trúc điều kiện (Ví dụ A & B)
+* **Ví dụ A (if/elseif/else):**
+  * Điểm = 5 $\rightarrow$ In ra: **"Cần cố gắng"**
+  * Điểm = 6.5 $\rightarrow$ In ra: **"Khá"**
+  * Điểm = 8 $\rightarrow$ In ra: **"Giỏi"**
+  * *Giải thích trường hợp 6.5:* Khi `$diem = 6.5`, điều kiện đầu tiên (`$diem >= 8`) kiểm tra trả về `false` nên bị bỏ qua. Chương trình chuyển sang kiểm tra điều kiện thứ hai (`$diem >= 6.5`) trả về `true` nên in ra "Khá" và dừng lại, không kiểm tra tiếp khối `else`.
 
 * **Ví dụ B (switch):**
-  * Trạng thái 1 $\rightarrow$ In ra: **"Chờ xác nhận"**
-  * Trạng thái 2 $\rightarrow$ In ra: **"Đã giao hàng"**
-  * Trạng thái khác (nhánh `default`) $\rightarrow$ In ra: **"Trạng thái không hợp lệ"**
+  * Trạng thái 1 $\rightarrow$ In ra: **"Mới tạo"**
+  * Trạng thái 2 $\rightarrow$ In ra: **"Đang xử lý"**
+  * Trạng thái 9 $\rightarrow$ In ra: **"Không xác định"**
   * *Vai trò của `default`:* Đóng vai trò là nhánh xử lý mặc định khi giá trị của biến không trùng khớp với bất kỳ `case` nào đã khai báo.
-  * *Hiện tượng khi bỏ `break` sau `case 2`:* Xảy ra hiện tượng **Fall-through** (chạy tràn), chương trình thực thi xong `case 2` sẽ tiếp tục chạy thẳng xuống thực thi khối lệnh của `default` mà không dừng lại, dẫn đến in ra cả "Đã giao hàng" lẫn "Trạng thái không hợp lệ".
+  * *Hiện tượng khi bỏ `break` sau `case 2`:* Xảy ra hiện tượng **Fall-through** (chạy tràn), chương trình thực thi xong `case 2` sẽ tiếp tục chạy thẳng xuống thực thi khối lệnh của `default` mà không dừng lại, dẫn đến in ra cả "Đang xử lý" lẫn "Không xác định".
 
+### 2. Vòng lặp (Ví dụ C & D)
 * **Ví dụ C (for):**
   * Với `$i <= 5`: Dãy in ra: `1 2 3 4 5 ` | Số lần lặp: **5 lần** | Giá trị `$i` sau lặp: **6**
   * Với `$i < 5`: Dãy in ra: `1 2 3 4 ` | Số lần lặp: **4 lần** | Giá trị `$i` sau lặp: **5**
@@ -46,10 +48,8 @@
 ## 3. NHIỆM VỤ 2 & 3: BÀI TẬP THỰC HÀNH CÁC TỆP ĐỘC LẬP
 
 ### 1. Nhiệm vụ 2: Bài tập nhãn trạng thái (`nv2_if.php` & `nv2_switch.php`)
-- **Tệp `nv2_if.php` (Chào theo thời gian):**
-  - Sử dụng hàm `date("H")` lấy giờ hiện tại. Kiểm tra các mốc thời gian để in ra lời chào tương ứng ("Chao buoi sang!", "Chao buoi chieu!", "Chao buoi toi!").
-- **Tệp `nv2_switch.php` (Trạng thái đơn hàng):**
-  - Kiểm tra biến `$trangThai`: Giá trị 1 in "Chờ xác nhận", giá trị 2 in "Đã giao hàng", giá trị khác in "Trạng thái không hợp lệ".Từ khóa `break` đảm bảo chương trình thoát khỏi `switch` ngay sau khi khớp dữ liệu.
+- Cả hai phương pháp `if/elseif/else` và `switch` đều trả về kết quả chính xác theo yêu cầu đề bài đối với các đầu vào test (1, 2, 9).
+- Cấu trúc `switch` giúp mã nguồn rõ ràng hơn khi so sánh một biến với các giá trị cố định, từ khóa `break` đảm bảo chương trình thoát khỏi khối lệnh ngay sau khi tìm thấy case phù hợp.
 
 ### 2. Nhiệm vụ 3: Bài tập danh sách đánh số (`nv3_for.php` & `nv3_while.php`)
 - **Khi `$soLuong = 0`:** Cả hai vòng lặp `for` và `while` đều không in ra bất kỳ dòng công việc nào (vòng lặp kiểm tra điều kiện ngay từ đầu và dừng lại).
@@ -65,9 +65,9 @@
 
 | STT | Đầu vào mẫu (`$trangThai`, `$soLuong`) | Kết quả mong đợi | Kết quả thực tế | Đánh giá |
 |---|---|---|---|---|
-| 1 | `$trangThai = 1`, `$soLuong = 0` | Hiển thị nhãn **"Chờ xác nhận"**, không in dòng công việc nào | Hiển thị đúng nhãn "Chờ xác nhận", không có dòng công việc | **ĐẠT (PASS)** |
-| 2 | `$trangThai = 2`, `$soLuong = 1` | Hiển thị nhãn **"Đã giao hàng"**, in ra "Công việc 1" | Hiển thị đúng nhãn "Đã giao hàng" và 1 dòng "Công việc 1" | **ĐẠT (PASS)** |
-| 3 | `$trangThai = 9`, `$soLuong = 5` | Hiển thị nhãn **"Trạng thái không hợp lệ"**, in ra từ "Công việc 1" đến "Công việc 5" | Hiển thị đúng nhãn "Trạng thái không hợp lệ" và đủ 5 dòng công việc | **ĐẠT (PASS)** |
+| 1 | `$trangThai = 1`, `$soLuong = 0` | Hiển thị nhãn **"Mới tạo"**, không in dòng công việc nào | Hiển thị đúng nhãn "Mới tạo", không có dòng công việc | **ĐẠT (PASS)** |
+| 2 | `$trangThai = 2`, `$soLuong = 1` | Hiển thị nhãn **"Đang xử lý"**, in ra "Công việc 1" | Hiển thị đúng nhãn "Đang xử lý" và 1 dòng "Công việc 1" | **ĐẠT (PASS)** |
+| 3 | `$trangThai = 9`, `$soLuong = 5` | Hiển thị nhãn **"Không xác định"**, in ra từ "Công việc 1" đến "Công việc 5" | Hiển thị đúng nhãn "Không xác định" và đủ 5 dòng công việc | **ĐẠT (PASS)** |
 
 ---
 

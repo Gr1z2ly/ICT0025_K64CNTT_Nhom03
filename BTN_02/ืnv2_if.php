@@ -12,6 +12,8 @@
             echo "Chao buoi sang!";
         } elseif ($gio < 18) {
             echo "Chao buoi chieu!";
+        } else {
+            echo "Chao buoi toi!";
         }
 </body>
 </html>

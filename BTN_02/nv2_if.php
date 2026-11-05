@@ -15,5 +15,6 @@
         } else {
             echo "Chao buoi toi!";
         }
+    ?>
 </body>
 </html>

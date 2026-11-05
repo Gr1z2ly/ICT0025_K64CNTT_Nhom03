@@ -9,10 +9,10 @@
 
 | STT | Họ và tên | Vai trò | Phân công đóng góp |
 |---|---|---|---|
-| 1 | [Bun Hin Thăm Ma Vị Chai] | Coordinator (Trưởng nhóm) | Tích hợp code Nhiệm vụ 4, quản lý Git repo |
-| 2 | [Hà Minh Khánh] | Driver | Thực hiện mã Nhiệm vụ 2 (`nv2_if.php`) & testcase |
-| 3 | [Bạc Thị Phương Hằng] | Navigator | Thực hiện mã Nhiệm vụ 2 (`nv2_switch.php`) & `PROGRESS.md` |
-| 4 | [Phó Tho Thăn Sạ May ] | Tester | Thực hiện mã Nhiệm vụ 3 (`nv3_for.php`, `nv3_while.php`) |
+| 1 | Bun Hin Thăm Ma Vị Chai | Coordinator (Trưởng nhóm) | Tích hợp code Nhiệm vụ 4, quản lý Git repo |
+| 2 | Hà Minh Khánh | Driver | Thực hiện mã Nhiệm vụ 2 (`nv2_if.php`) & testcase |
+| 3 | Bạc Thị Phương Hằng | Navigator | Thực hiện mã Nhiệm vụ 2 (`nv2_switch.php`) & `PROGRESS.md` |
+| 4 | Phó Tho Thăn Sạ May | Tester | Thực hiện mã Nhiệm vụ 3 (`nv3_for.php`, `nv3_while.php`) |
 
 ---
 
@@ -63,9 +63,9 @@
 
 | STT | Đầu vào (Trạng thái, Số lượng) | Kết quả mong đợi | Kết quả thực tế | Đánh giá |
 |---|---|---|---|---|
-| 1 | `$trangThai = 1`, `$soLuong = 0` | Hiển thị "Mới tạo", không in dòng công việc | Giống mong đợi | **Đạt** |
-| 2 | `$trangThai = 2`, `$soLuong = 1` | Hiển thị "Đang xử lý", in "Công việc 1" | Giống mong đợi | **Đạt** |
-| 3 | `$trangThai = 9`, `$soLuong = 5` | Hiển thị "Không xác định", in "Công việc 1" đến 5 | Giống mong đợi | **Đạt** |
+| 1 | `$trangThai = 1`, `$soLuong = 0` | Hiển thị "Chờ xác nhận", không in dòng công việc | Giống mong đợi | **Đạt** |
+| 2 | `$trangThai = 2`, `$soLuong = 1` | Hiển thị "Đã giao hàng", in "Công việc 1" | Giống mong đợi | **Đạt** |
+| 3 | `$trangThai = 9`, `$soLuong = 5` | Hiển thị "Trạng thái không hợp lệ", in "Công việc 1" đến 5 | Giống mong đợi | **Đạt** |
 
 ---
 

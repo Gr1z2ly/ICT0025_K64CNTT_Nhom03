@@ -6,6 +6,12 @@
     <title>nv3_for</title>
 </head>
 <body>
-    
+    <?php
+    $soLuong = 5;
+
+    for ($i = 1; $i <= $soLuong; $i++) {
+        echo "Công việc " . $i . "<br>\n";
+    }
+    ?>
 </body>
 </html>

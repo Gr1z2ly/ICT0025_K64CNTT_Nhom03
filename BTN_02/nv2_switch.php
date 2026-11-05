@@ -10,13 +10,13 @@
     $trangthai = 2;
     switch ($trangthai) {
         case 1:
-            echo "Mới tạo";
+            echo "Chờ xác nhận";
             break;
             case 2: 
-                echo "Đang xử lý";
+                echo "Đã giao hàng";
                 break;
                 default:
-                echo "Không xác định";
+                echo "Trạng thái không hợp lệ";
     }
     ?>
 </body>

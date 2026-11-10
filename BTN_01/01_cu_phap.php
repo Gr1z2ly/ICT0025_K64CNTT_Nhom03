@@ -6,13 +6,6 @@
     <title>01_cu_phap</title>
 </head>
 <body>
-    <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Bài 01 - Cú pháp PHP cơ bản</title>
-</head>
-<body>
     <h1>
         <?php
             // Bài 01: Cú pháp PHP cơ bản và câu lệnh echo

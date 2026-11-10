@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: #233344;
+    background: #f2f7f6;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px max(24px, calc((100% - 900px) / 2));
+    background: white;
+}
+
+header a,
+.links a {
+    color: #087e83;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    gap: 18px;
+}
+
+main {
+    width: min(100% - 32px, 520px);
+    margin: 64px auto;
+}
+
+.card {
+    padding: 32px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 8px 28px #18352b12;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+p {
+    color: #667783;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin: 16px 0 6px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd8d6;
+    border-radius: 6px;
+    font: inherit;
+}
+
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd8d6;
+    border-radius: 6px;
+    background: white;
+    font: inherit;
+}
+
+.password-field {
+    display: flex;
+    gap: 8px;
+}
+
+.password-toggle {
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+button,
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 6px;
+    color: white;
+    background: #087e83;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none;
+}
+
+.button.secondary {
+    color: #087e83;
+    background: #e8f4f1;
+}
+
+.message {
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #8c3232;
+    background: #fff0ef;
+}
+
+footer {
+    color: #778681;
+    text-align: center;
+}
+
+@media (max-width: 500px) {
+    header {
+        padding: 16px;
+    }
+
+    .card {
+        padding: 24px;
+    }
+}

@@ -12,11 +12,11 @@
         case 1:
             echo "Chờ xác nhận";
             break;
-            case 2: 
-                echo "Đã giao hàng";
-                break;
-                default:
-                echo "Trạng thái không hợp lệ";
+        case 2: 
+            echo "Đã giao hàng";
+            break;
+            default:
+            echo "Trạng thái không hợp lệ";
     }
     ?>
 </body>

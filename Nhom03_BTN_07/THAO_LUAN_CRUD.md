@@ -7,7 +7,7 @@
 - **U - Update (Cập nhật / Sửa):** Chỉnh sửa thông tin của bản ghi đã tồn tại theo khóa chính `id` (tương ứng câu lệnh SQL `UPDATE ... WHERE id = ?`).
 - **D - Delete (Xóa):** Xóa bản ghi khỏi hệ thống (tương ứng câu lệnh SQL `DELETE FROM ... WHERE id = ?` hoặc cập nhật cờ xóa mềm `UPDATE ... SET da_xoa = 1`).
 
-## 2. Đối chiếu CRUD vào Đề tài A9 (Quản lý bán hàng mini)
+## 2. Đối chiếu CRUD vào Đề tài A9 (Quản lý bán hàng mini có giỏ hàng)
 
 | Thao tác | Phương thức HTTP | Câu lệnh SQL & Kỹ thuật áp dụng trong PHP | Ví dụ thực tế trên bảng `san_pham` & `danh_muc` |
 |---|---|---|---|

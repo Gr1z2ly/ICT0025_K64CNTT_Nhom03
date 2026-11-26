@@ -10,67 +10,30 @@ $loaiThongBao = '';
 $sanPhamDangSua = null;
 
 // ========================================================
-// 1. XỬ LÝ CHUYỂN VÀO THÙNG RÁC (SOFT DELETE - da_xoa = 1)
+// 1. XỬ LÝ XÓA (DELETE) QUA POST
 // ========================================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'soft_delete') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     $idXoa = isset($_POST['id']) ? (int)$_POST['id'] : 0;
     if ($idXoa > 0) {
         try {
-            $stmt = $pdo->prepare("UPDATE san_pham SET da_xoa = 1 WHERE id = :id");
-            $stmt->execute([':id' => $idXoa]);
-            if ($stmt->rowCount() > 0) {
-                $thongBao = "Đã chuyển sản phẩm (ID: $idXoa) vào Thùng rác!";
+            $stmtDel = $pdo->prepare("DELETE FROM san_pham WHERE id = :id");
+            $stmtDel->execute([':id' => $idXoa]);
+            if ($stmtDel->rowCount() > 0) {
+                $thongBao = "Đã xóa thành công sản phẩm có ID = $idXoa!";
                 $loaiThongBao = 'success';
+            } else {
+                $thongBao = "Không tìm thấy sản phẩm để xóa!";
+                $loaiThongBao = 'error';
             }
         } catch (PDOException $e) {
-            $thongBao = "Lỗi khi chuyển vào thùng rác: " . $e->getMessage();
+            $thongBao = "Lỗi khi xóa: " . $e->getMessage();
             $loaiThongBao = 'error';
         }
     }
 }
 
 // ========================================================
-// 2. XỬ LÝ KHÔI PHỤC TỪ THÙNG RÁC (RESTORE - da_xoa = 0)
-// ========================================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'restore') {
-    $idKhoiPhuc = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-    if ($idKhoiPhuc > 0) {
-        try {
-            $stmt = $pdo->prepare("UPDATE san_pham SET da_xoa = 0 WHERE id = :id");
-            $stmt->execute([':id' => $idKhoiPhuc]);
-            if ($stmt->rowCount() > 0) {
-                $thongBao = "Đã khôi phục sản phẩm (ID: $idKhoiPhuc) về danh sách chính!";
-                $loaiThongBao = 'success';
-            }
-        } catch (PDOException $e) {
-            $thongBao = "Lỗi khi khôi phục: " . $e->getMessage();
-            $loaiThongBao = 'error';
-        }
-    }
-}
-
-// ========================================================
-// 3. XỬ LÝ XÓA VĨNH VIỄN KHỎI CSDL (HARD DELETE)
-// ========================================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'hard_delete') {
-    $idXoaVinhVien = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-    if ($idXoaVinhVien > 0) {
-        try {
-            $stmt = $pdo->prepare("DELETE FROM san_pham WHERE id = :id AND da_xoa = 1");
-            $stmt->execute([':id' => $idXoaVinhVien]);
-            if ($stmt->rowCount() > 0) {
-                $thongBao = "Đã xóa vĩnh viễn sản phẩm (ID: $idXoaVinhVien) khỏi CSDL!";
-                $loaiThongBao = 'success';
-            }
-        } catch (PDOException $e) {
-            $thongBao = "Lỗi khi xóa vĩnh viễn: " . $e->getMessage();
-            $loaiThongBao = 'error';
-        }
-    }
-}
-
-// ========================================================
-// 4. XỬ LÝ THÊM MỚI (INSERT) HOẶC CẬP NHẬT (UPDATE)
+// 2. XỬ LÝ THÊM MỚI (INSERT) HOẶC CẬP NHẬT (UPDATE) QUA POST
 // ========================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save') {
     $idSua = isset($_POST['id']) ? (int)$_POST['id'] : 0;
@@ -78,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $giaBan = isset($_POST['gia_ban']) ? trim($_POST['gia_ban']) : '';
     $soLuong = isset($_POST['so_luong']) ? trim($_POST['so_luong']) : '';
 
+    // Kiểm tra dữ liệu đầu vào (Validation)
     if ($tenSp === '' || $giaBan === '' || $soLuong === '') {
         $thongBao = 'Vui lòng nhập đầy đủ Tên sản phẩm, Giá bán và Số lượng!';
         $loaiThongBao = 'error';
@@ -87,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         try {
             if ($idSua > 0) {
-                $sql = "UPDATE san_pham SET ten_sp = :ten_sp, gia_ban = :gia_ban, so_luong = :so_luong WHERE id = :id AND da_xoa = 0";
+                // CẬP NHẬT (UPDATE) BẢN GHI XÁC ĐỊNH QUA WHERE id = :id
+                $sql = "UPDATE san_pham SET ten_sp = :ten_sp, gia_ban = :gia_ban, so_luong = :so_luong WHERE id = :id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':ten_sp' => $tenSp,
@@ -98,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $thongBao = "Cập nhật sản phẩm (ID: $idSua) thành công!";
                 $loaiThongBao = 'success';
             } else {
-                $sql = "INSERT INTO san_pham (ten_sp, gia_ban, so_luong, da_xoa) VALUES (:ten_sp, :gia_ban, :so_luong, 0)";
+                // THÊM MỚI (INSERT)
+                $sql = "INSERT INTO san_pham (ten_sp, gia_ban, so_luong) VALUES (:ten_sp, :gia_ban, :so_luong)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':ten_sp' => $tenSp,
@@ -116,30 +82,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // ========================================================
-// 5. LẤY DỮ LIỆU ĐỂ SỬA (GET)
+// 3. LẤY DỮ LIỆU ĐỂ ĐỔ LÊN FORM KHI BẤM NÚT "SỬA" (GET)
 // ========================================================
 if (isset($_GET['edit_id'])) {
     $editId = (int)$_GET['edit_id'];
     if ($editId > 0) {
-        $stmtOne = $pdo->prepare("SELECT id, ten_sp, gia_ban, so_luong FROM san_pham WHERE id = :id AND da_xoa = 0");
+        $stmtOne = $pdo->prepare("SELECT id, ten_sp, gia_ban, so_luong FROM san_pham WHERE id = :id");
         $stmtOne->execute([':id' => $editId]);
         $sanPhamDangSua = $stmtOne->fetch(PDO::FETCH_ASSOC);
     }
 }
 
 // ========================================================
-// 6. LẤY 2 DANH SÁCH: ĐANG HIỂN THỊ (da_xoa = 0) & THÙNG RÁC (da_xoa = 1)
+// 4. LẤY DANH SÁCH SẢN PHẨM HIỂN THỊ (SELECT)
 // ========================================================
-$danhSachChinh = [];
-$danhSachThungRac = [];
+$danhSachSanPham = [];
 try {
-    $stmtActive = $pdo->query("SELECT id, ten_sp, gia_ban, so_luong FROM san_pham WHERE da_xoa = 0 ORDER BY id DESC");
-    $danhSachChinh = $stmtActive->fetchAll(PDO::FETCH_ASSOC);
-
-    $stmtTrash = $pdo->query("SELECT id, ten_sp, gia_ban, so_luong FROM san_pham WHERE da_xoa = 1 ORDER BY id DESC");
-    $danhSachThungRac = $stmtTrash->fetchAll(PDO::FETCH_ASSOC);
+    $stmtSelect = $pdo->query("SELECT id, ten_sp, gia_ban, so_luong FROM san_pham ORDER BY id DESC");
+    $danhSachSanPham = $stmtSelect->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    $thongBao = 'Lỗi truy vấn dữ liệu: ' . $e->getMessage();
+    $thongBao = 'Lỗi truy vấn danh sách: ' . $e->getMessage();
     $loaiThongBao = 'error';
 }
 ?>
@@ -147,26 +109,23 @@ try {
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Sản phẩm & Thùng rác - Nhóm 3</title>
+    <title>Quản lý Sản phẩm (CRUD) - Nhóm 3</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 900px; margin: 30px auto; padding: 0 15px; line-height: 1.5; }
-        .form-box { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 25px; }
+        body { font-family: Arial, sans-serif; max-width: 850px; margin: 30px auto; padding: 0 15px; line-height: 1.5; }
+        .form-box { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 6px; }
         .form-group { margin-bottom: 12px; }
         label { display: block; font-weight: bold; margin-bottom: 4px; }
         input[type="text"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { padding: 7px 14px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 13px; display: inline-block; }
+        .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 14px; display: inline-block; }
         .btn-primary { background: #007bff; color: white; }
         .btn-warning { background: #f0ad4e; color: white; }
-        .btn-trash { background: #ff7043; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger { background: #d9534f; color: white; }
         .btn-secondary { background: #6c757d; color: white; }
         .msg-error { color: #a94442; background: #f2dede; border: 1px solid #ebccd1; padding: 12px; margin-bottom: 15px; border-radius: 4px; }
         .msg-success { color: #3c763d; background: #dff0d8; border: 1px solid #d6e9c6; padding: 12px; margin-bottom: 15px; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         th { background-color: #f1f3f5; }
-        .trash-section { background: #fff5f5; border: 1px dashed #dc3545; padding: 15px; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -210,10 +169,10 @@ try {
         </form>
     </div>
 
-    <!-- DANH SÁCH 1: SẢN PHẨM ĐANG HOẠT ĐỘNG (da_xoa = 0) -->
-    <h3>Danh Sách Sản Phẩm Hiện Có (<?= count($danhSachChinh) ?>)</h3>
-    <?php if (count($danhSachChinh) === 0): ?>
-        <p><em>Chưa có sản phẩm nào trong danh sách chính.</em></p>
+    <!-- BẢNG DANH SÁCH & NÚT SỬA / XÓA -->
+    <h3>Danh Sách Sản Phẩm Hiện Có</h3>
+    <?php if (count($danhSachSanPham) === 0): ?>
+        <p><em>Chưa có sản phẩm nào trong cơ sở dữ liệu.</em></p>
     <?php else: ?>
         <table>
             <thead>
@@ -222,24 +181,26 @@ try {
                     <th>Tên sản phẩm</th>
                     <th>Giá bán</th>
                     <th>Số lượng</th>
-                    <th style="width: 190px;">Thao tác</th>
+                    <th style="width: 150px;">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($danhSachChinh as $sp): ?>
+                <?php foreach ($danhSachSanPham as $sp): ?>
                     <tr>
                         <td><?= htmlspecialchars((string)$sp['id'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td><?= htmlspecialchars($sp['ten_sp'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td><?= number_format((float)$sp['gia_ban'], 0, ',', '.') ?> VNĐ</td>
                         <td><?= htmlspecialchars((string)$sp['so_luong'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td>
+                            <!-- Nút Sửa -->
                             <a href="sanpham.php?edit_id=<?= (int)$sp['id'] ?>" class="btn btn-warning">Sửa</a>
 
+                            <!-- Form Xóa (Dùng POST + Xác nhận JS) -->
                             <form method="post" action="sanpham.php" style="display:inline;"
-                                  onsubmit="return confirm('Chuyển sản phẩm \'<?= htmlspecialchars(addslashes($sp['ten_sp']), ENT_QUOTES, 'UTF-8') ?>\' vào Thùng rác?');">
-                                <input type="hidden" name="action" value="soft_delete">
+                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm \'<?= htmlspecialchars(addslashes($sp['ten_sp']), ENT_QUOTES, 'UTF-8') ?>\' (ID: <?= (int)$sp['id'] ?>) không?');">
+                                <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= (int)$sp['id'] ?>">
-                                <button type="submit" class="btn btn-trash">Bỏ vào thùng rác</button>
+                                <button type="submit" class="btn btn-danger">Xóa</button>
                             </form>
                         </td>
                     </tr>
@@ -247,51 +208,5 @@ try {
             </tbody>
         </table>
     <?php endif; ?>
-
-    <!-- DANH SÁCH 2: THÙNG RÁC (da_xoa = 1) -->
-    <div class="trash-section">
-        <h3>🗑️ Thùng Rác (<?= count($danhSachThungRac) ?>)</h3>
-        <?php if (count($danhSachThungRac) === 0): ?>
-            <p><em>Thùng rác đang trống.</em></p>
-        <?php else: ?>
-            <table style="margin-bottom: 0;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Giá bán</th>
-                        <th>Số lượng</th>
-                        <th style="width: 210px;">Thao tác thùng rác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($danhSachThungRac as $spRac): ?>
-                        <tr>
-                            <td><?= htmlspecialchars((string)$spRac['id'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($spRac['ten_sp'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= number_format((float)$spRac['gia_ban'], 0, ',', '.') ?> VNĐ</td>
-                            <td><?= htmlspecialchars((string)$spRac['so_luong'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td>
-                                <!-- Nút Khôi phục -->
-                                <form method="post" action="sanpham.php" style="display:inline;">
-                                    <input type="hidden" name="action" value="restore">
-                                    <input type="hidden" name="id" value="<?= (int)$spRac['id'] ?>">
-                                    <button type="submit" class="btn btn-success">Khôi phục</button>
-                                </form>
-
-                                <!-- Nút Xóa vĩnh viễn -->
-                                <form method="post" action="sanpham.php" style="display:inline;"
-                                      onsubmit="return confirm('CẢNH BÁO: Xóa vĩnh viễn sản phẩm \'<?= htmlspecialchars(addslashes($spRac['ten_sp']), ENT_QUOTES, 'UTF-8') ?>\'? Không thể khôi phục lại!');">
-                                    <input type="hidden" name="action" value="hard_delete">
-                                    <input type="hidden" name="id" value="<?= (int)$spRac['id'] ?>">
-                                    <button type="submit" class="btn btn-danger">Xóa vĩnh viễn</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
 </body>
 </html>
